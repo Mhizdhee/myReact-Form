@@ -1,0 +1,84 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.card{
+ background-color:black;
+ border-radius: 20px;
+ width: 60%;
+ height: 80vh;
+ margin: 0 auto;
+ margin-top:5% ;
+
+  
+}
+.card-info h1{
+    color: white;
+    padding: 20px;
+    font-size: 25px;
+    font-style: italic;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-card{
+    
+}
+.card-details{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ padding: 10px;
+}
+/* .card-info{
+    padding: 20px;
+    width: 50vw;
+    
+} */
+
+
+
+.image img{
+    width:100vw;
+    padding: 20px;
+    height: 60vh;
+}
+
+.form-card Input{
+    width: 30vw;
+    margin: 10px;
+    border-radius: 20px;
+    /* color: white; */
+    
+
+}
+
+Input:hover{
+    /* background-color: white; */
+    color:rgb(236, 231, 241);
+}
+
+Input::placeholder{
+    color: rgb(66, 96, 230);
+}
+
+.form-card Textarea{
+    width: 30vw;
+    margin: 10px;
+}
+
+Textarea:hover{
+/* background-color: white; */
+color: rgb(236, 231, 241);
+}
+
+Textarea::placeholder{
+    color: rgb(66, 96, 230);
+}
+.btn Button{
+    width: 30vw;
+    margin: 10px;
+}
