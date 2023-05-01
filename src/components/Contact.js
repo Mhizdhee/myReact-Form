@@ -1,18 +1,23 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { Input, Textarea, Button } from "@chakra-ui/react";
+import { Input, Textarea, Button, Alert, AlertIcon } from "@chakra-ui/react";
 
 import Images from "../Images/contact-img.jpg";
 import "../styles/contact.css";
 
 const Contact = () => {
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
+
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -39,6 +44,41 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // setErrors({});
+    // setError(false);
+    setSuccess(false);
+    setLoading(true);
+    const userData = {
+      name: formData.name,
+      email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+    };
+    console.log(userData);
+    axios
+      .post(
+        "https://my-json-server.typicode.com/tundeojediran/contacts-api-server/inquiries",
+        userData
+      )
+      .then((response) => {
+        console.log(response.status, response.data.token);
+        // setLoading(false);
+        setSuccess(true);
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+      })
+      .catch((error) => {
+        // setLoading(false);
+        setError("Something went wrong. Please try again later");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
     const errors = validateForm();
     setErrors(errors);
 
@@ -48,35 +88,12 @@ const Contact = () => {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-  };
-
-  // const handleChange = (e) => {
-  //   const value = e.target.value;
-  //   setData({
-  //     ...data,
-  //     [e.target.name]: value,
-  //   });
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const userData = {
-  //     name: data.name,
-  //     email: data.email,
-  //     subject: data.subject,
-  //     message: data.message,
-  //   };
-  axios
-    .post(
-      "https://my-json-server.typicode.com/tundeojediran/contacts-api-server/inquiries"
-      // userData
-    )
-    .then((response) => {
-      console.log(response.status, response.data.token);
+    const value = e.target.value;
+    setFormData({
+      ...formData,
+      [e.target.name]: value,
     });
-  // };
+  };
 
   return (
     <>
@@ -86,6 +103,19 @@ const Contact = () => {
         </div>
         <div className="card-details">
           <div className="form-card">
+            {success && (
+              <Alert status="success">
+                <AlertIcon />
+                Form submitted successfully
+              </Alert>
+            )}
+            {error && (
+              <Alert status="failed">
+                <AlertIcon />
+                Form submitted failed
+              </Alert>
+              // <div className="error-message">Form submission failed</div>
+            )}
             <form onSubmit={handleSubmit}>
               <Input
                 type="text"
@@ -125,10 +155,13 @@ const Contact = () => {
                 rows="4"
                 cols="50"
               />
+
               {errors.message && <div className="error">{errors.message}</div>}
 
               <div className="btn">
-                <Button colorScheme="linkedin">Submit</Button>
+                <Button type="submit" colorScheme="linkedin">
+                  Submit
+                </Button>
               </div>
             </form>
           </div>
