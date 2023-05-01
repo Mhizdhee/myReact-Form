@@ -1,0 +1,16 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* body{
+  background-color: blue;
+} */
+
+ .wrapper{
+  /* background-color: rgb(108, 71, 143); */
+  height: 100vh;
+  background-color: white;
+
+} 
