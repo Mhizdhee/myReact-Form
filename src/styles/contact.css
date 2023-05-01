@@ -87,3 +87,7 @@ Textarea::placeholder{
 .error{
     color:red;
 }
+
+.load{
+    color:white;
+}

@@ -1,7 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { Input, Textarea, Button, Alert, AlertIcon } from "@chakra-ui/react";
+import {
+  Input,
+  Textarea,
+  Button,
+  Alert,
+  AlertIcon,
+} from "@chakra-ui/react";
 
 import Images from "../Images/contact-img.jpg";
 import "../styles/contact.css";
@@ -44,49 +50,52 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // setErrors({});
-    // setError(false);
-    setSuccess(false);
-    setLoading(true);
-    const userData = {
-      name: formData.name,
-      email: formData.email,
-      subject: formData.subject,
-      message: formData.message,
-    };
-    console.log(userData);
-    axios
-      .post(
-        "https://my-json-server.typicode.com/tundeojediran/contacts-api-server/inquiries",
-        userData
-      )
-      .then((response) => {
-        console.log(response.status, response.data.token);
-        // setLoading(false);
-        setSuccess(true);
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });
-      })
-      .catch((error) => {
-        // setLoading(false);
-        setError("Something went wrong. Please try again later");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-
     const errors = validateForm();
     setErrors(errors);
-
     if (Object.keys(errors).length === 0) {
-      // submit form
+      setLoading(true);
+      setError(false);
+      setSuccess(false);
+      // setLoading(true);
+      const userData = {
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+      };
+      console.log(userData);
+      axios
+        .post(
+          "https://my-json-server.typicode.com/tundeojediran/contacts-api-server/inquiries",
+          userData
+        )
+        .then((response) => {
+          console.log(response.status, response.data.token);
+          // setLoading(false);
+          setSuccess(true);
+          setFormData({
+            name: "",
+            email: "",
+            subject: "",
+            message: "",
+          });
+        })
+        .catch((error) => {
+          // setLoading(false);
+          setError("Something went wrong. Please try again later");
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+
+      // const errors = validateForm();
+      // setErrors(errors);
+
+      // if (Object.keys(errors).length === 0) {
+      //   // submit form
+      // }
     }
   };
-
   const handleChange = (e) => {
     const value = e.target.value;
     setFormData({
@@ -159,9 +168,15 @@ const Contact = () => {
               {errors.message && <div className="error">{errors.message}</div>}
 
               <div className="btn">
-                <Button type="submit" colorScheme="linkedin">
+                <Button
+                  
+                  type="submit"
+                  colorScheme="linkedin"
+                  
+                >
                   Submit
                 </Button>
+                {loading && <div class='load'>Loading...</div>}
               </div>
             </form>
           </div>
@@ -173,6 +188,6 @@ const Contact = () => {
       </div>
     </>
   );
+  // };
 };
-
 export default Contact;
